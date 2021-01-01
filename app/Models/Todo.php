@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Member extends Model
+class Todo extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'email', 'phone_number', 'image', 'status'];
+
+    protected $fillable = ['title', 'image', 'description'];
 }

@@ -18,13 +18,14 @@
             <button wire:click="create()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Tambah Anggota</button>
             
             @if($isModal)
-                @include('livewire.create')
+                @include('livewire.member.create')
             @endif
 
             <table class="table-fixed w-full">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="px-4 py-2">Nama</th>
+                        <th class="px-4 py-2">Image</th>
                         <th class="px-4 py-2">Email</th>
                         <th class="px-4 py-2">Telp</th>
                         <th class="px-4 py-2 w-25">Status</th>
@@ -35,13 +36,14 @@
                     @forelse($members as $row)
                         <tr>
                             <td class="border px-4 py-2">{{ $row->name }}</td>
+                            <td class="border px-4 py-2"><img src="{{ Storage::url($row->image) }}"></td>
                             <td class="border px-4 py-2">{{ $row->email }}</td>
                             <td class="border px-4 py-2">{{ $row->phone_number }}</td>
                             <td class="border px-4 py-2">
                                 @if($row->status == 0) 
-                                    <button class="bg-blue-200 px-2">Free</button>
+                                    <button class="bg-blue-200 px-2 text-grey">Free</button>
                                  @else 
-                                 <button class="bg-blue-500 px-2">Premium</button>
+                                 <button class="bg-blue-500 px-2 text-white">Premium</button>
                                 @endif
                                 </td>
                             <td class="border px-4 py-2">

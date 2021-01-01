@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Members;
+use App\Http\Livewire\Todos;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,5 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     })->name('dashboard');
 
     Route::get('member', Members::class)->name('member');
+    Route::get('todos', Todos::class)->name('todo');
 });

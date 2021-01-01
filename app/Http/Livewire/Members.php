@@ -4,17 +4,19 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Member;
+use Livewire\WithFileUploads;
 
 class Members extends Component
 {
-    public $members, $name, $email, $phone_number, $status, $member_id;
+    use WithFileUploads;
+    public $members, $name, $email, $image, $phone_number, $status, $member_id;
     public $isModal = 0;
 
     //FUNGSI INI UNTUK ME-LOAD VIEW YANG AKAN MENJADI TAMPILAN HALAMAN MEMBER
     public function render()
     {
-        $this->members = Member::orderBy('created_at', 'DESC')->get(); //MEMBUAT QUERY UNTUK MENGAMBIL DATA
-        return view('livewire.members'); //LOAD VIEW MEMBERS.BLADE.PHP YG ADA DI DALAM FOLDER /RESOURSCES/VIEWS/LIVEWIRE
+        $this->members = Member::orderBy('id', 'DESC')->get(); //MEMBUAT QUERY UNTUK MENGAMBIL DATA
+        return view('livewire.member.members'); //LOAD VIEW MEMBERS.BLADE.PHP YG ADA DI DALAM FOLDER /RESOURSCES/VIEWS/LIVEWIRE
     }
 
     //FUNGSI INI AKAN DIPANGGIL KETIKA TOMBOL TAMBAH ANGGOTA DITEKAN
@@ -44,6 +46,7 @@ class Members extends Component
         $this->name = '';
         $this->email = '';
         $this->phone_number = '';
+        $this->image = '';
         $this->status = '';
         $this->member_id = '';
     }
@@ -56,6 +59,7 @@ class Members extends Component
             'name' => 'required|string',
             'email' => 'required|email|unique:members,email,' . $this->member_id,
             'phone_number' => 'required|numeric',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required'
         ]);
 
@@ -66,6 +70,7 @@ class Members extends Component
             'name' => $this->name,
             'email' => $this->email,
             'phone_number' => $this->phone_number,
+            'image' => $this->image->store('files', 'public'),
             'status' => $this->status,
         ]);
 
@@ -84,6 +89,7 @@ class Members extends Component
         $this->name = $member->name;
         $this->email = $member->email;
         $this->phone_number = $member->phone_number;
+        $this->image = $member->image;
         $this->status = $member->status;
 
         $this->openModal(); //LALU BUKA MODAL
